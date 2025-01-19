@@ -83,14 +83,14 @@ export default function StockPage() {
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
-                              variant={"outline"}
+                              variant={'outline'}
                               className={cn(
-                                "w-[240px] pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
+                                'w-[240px] pl-3 text-left font-normal',
+                                !field.value && 'text-muted-foreground'
                               )}
                             >
                               {field.value ? (
-                                format(field.value, "PPP")
+                                format(field.value, 'PPP')
                               ) : (
                                 <span>Pick a date</span>
                               )}
@@ -104,7 +104,7 @@ export default function StockPage() {
                             selected={field.value}
                             onSelect={field.onChange}
                             disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
+                              date > new Date() || date < new Date('1900-01-01')
                             }
                             initialFocus
                           />
@@ -125,14 +125,14 @@ export default function StockPage() {
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
-                              variant={"outline"}
+                              variant={'outline'}
                               className={cn(
-                                "w-[240px] pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
+                                'w-[240px] pl-3 text-left font-normal',
+                                !field.value && 'text-muted-foreground'
                               )}
                             >
                               {field.value ? (
-                                format(field.value, "PPP")
+                                format(field.value, 'PPP')
                               ) : (
                                 <span>Pick a date</span>
                               )}
@@ -146,7 +146,7 @@ export default function StockPage() {
                             selected={field.value}
                             onSelect={field.onChange}
                             disabled={(date) =>
-                              date > new Date() || date < new Date("1900-01-01")
+                              date > new Date() || date < new Date('1900-01-01')
                             }
                             initialFocus
                           />
