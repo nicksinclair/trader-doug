@@ -36,7 +36,7 @@ export default function StockPage() {
         to: format(values.to ?? new Date(), 'yyyy-MM-dd'),
       })
 
-      const response = await fetch(`/api/stock-data?${params}`)
+      const response = await fetch(`/api/aggregates?${params}`)
       const data = await response.json()
       setStockData(data)
     } catch (error) {
