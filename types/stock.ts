@@ -1,4 +1,4 @@
-export interface StockData {
+export interface GetAggregatesResponse {
   ticker: string
   queryCount: number
   resultsCount: number
@@ -16,5 +16,11 @@ export interface StockData {
   status: string
   request_id: string
   count: number
+}
+
+export interface GetAggregatesRequest {
+  ticker: string,
+  from?: Date,
+  to?: Date,
 }
 
