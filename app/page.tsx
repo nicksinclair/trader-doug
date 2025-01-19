@@ -5,6 +5,7 @@ import { CalendarIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { getAggregates } from '@/app/api'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -13,7 +14,7 @@ import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 
-import type { GetAggregatesResponse, GetAggregatesRequest } from '@/types/stock'
+import type { GetAggregatesResponse, GetAggregatesRequest } from '@/types/stocks'
 
 export default function StockPage() {
   const [stockData, setStockData] = useState<GetAggregatesResponse | null>(null)
@@ -21,7 +22,7 @@ export default function StockPage() {
 
   const form = useForm<GetAggregatesRequest>({
     defaultValues: {
-      ticker: '',
+      ticker: 'AAPL',
       from: undefined,
       to: undefined,
     },
@@ -30,14 +31,7 @@ export default function StockPage() {
   async function onSubmit(values: GetAggregatesRequest) {
     setLoading(true)
     try {
-      const params = new URLSearchParams({
-        ticker: values.ticker,
-        from: format(values.from ?? new Date(), 'yyyy-MM-dd'),
-        to: format(values.to ?? new Date(), 'yyyy-MM-dd'),
-      })
-
-      const response = await fetch(`/api/aggregates?${params}`)
-      const data = await response.json()
+      const data = await getAggregates(values)
       setStockData(data)
     } catch (error) {
       console.error('Failed to fetch stock data:', error)
