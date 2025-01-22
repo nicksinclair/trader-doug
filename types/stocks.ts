@@ -6,14 +6,22 @@ export interface GetAggregatesResponse {
   resultsCount: number
   adjusted: boolean
   results: {
-    c: number // close price
-    h: number // highest price
-    l: number // lowest price
-    n: number // number of transactions
-    o: number // open price
-    t: number // timestamp
-    v: number // trading volume
-    vw: number // volume weighted average price
+    /** Close price */
+    c: number
+    /** Highest price */
+    h: number
+    /** Lowest price */
+    l: number
+    /** Number of transactions */
+    n: number
+    /** Open price */
+    o: number
+    /** Timestamp */
+    t: number
+    /** Trading volume */
+    v: number
+    /** Volume weighted average price */
+    vw: number
   }[]
   status: string
   request_id: string

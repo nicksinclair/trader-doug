@@ -35,8 +35,8 @@ export default function StockDataCard({ ticker }: StockDataCardProps) {
       </CardHeader>
       <CardContent className="pt-0">
         {isLoading && <div>Loading...</div>}
-        {(isError || stockData?.length === 0) && <div>Could not load stock data</div>}
-        {stockData?.map((result) => (
+        {(isError || stockData?.results?.length === 0) && <div>Could not load stock data</div>}
+        {stockData?.results?.map((result) => (
           <Card key={result.t}>
             <CardContent className="pt-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

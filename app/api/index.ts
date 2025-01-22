@@ -45,7 +45,7 @@ export async function getAggregates(request: GetAggregatesRequest) {
   //   count: 1,
   // }
 
-  return data.results
+  return data
 }
 
 export async function getTickers() {
