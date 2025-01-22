@@ -6,14 +6,34 @@ import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { DATE_RANGE_KEY } from '@/lib/queryKeys'
 import { cn } from '@/lib/utils'
+import { DateRange } from '@/types/dateRange'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+
+const defaultDateRange: DateRange = {
+  from: subDays(new Date(), 8),
+  to: subDays(new Date(), 1),
+}
 
 export default function DateRangePicker() {
+  const queryClient = useQueryClient()
+
+  const { data: dateRange = defaultDateRange } = useQuery<DateRange>({
+    queryKey: [DATE_RANGE_KEY],
+    queryFn: () => defaultDateRange
+  })
+
+  const updateDateRange = (newDateRange: DateRange) => {
+    console.info('Updating date range:', newDateRange)
+    queryClient.setQueryData([DATE_RANGE_KEY], (prev: DateRange) => ({
+      ...prev,
+      ...newDateRange,
+    }))
+  }
+
   const form = useForm({
-    defaultValues: {
-      from: subDays(new Date(), 8),
-      to: subDays(new Date(), 1),
-    },
+    defaultValues: dateRange,
   })
 
   return (
@@ -48,7 +68,10 @@ export default function DateRangePicker() {
                   <Calendar
                     mode="single"
                     selected={field.value}
-                    onSelect={field.onChange}
+                    onSelect={(date) => {
+                      field.onChange(date)
+                      updateDateRange({ from: date })
+                    }}
                     disabled={(date) =>
                       date > new Date() || date < new Date('1900-01-01')
                     }
@@ -90,7 +113,10 @@ export default function DateRangePicker() {
                   <Calendar
                     mode="single"
                     selected={field.value}
-                    onSelect={field.onChange}
+                    onSelect={(date) => {
+                      field.onChange(date)
+                      updateDateRange({ to: date })
+                    }}
                     disabled={(date) =>
                       date > new Date() || date < new Date('1900-01-01')
                     }

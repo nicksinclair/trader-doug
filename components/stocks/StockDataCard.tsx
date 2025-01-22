@@ -4,22 +4,28 @@ import { format } from 'date-fns'
 
 import { getAggregates } from '@/app/api'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { DATE_RANGE_KEY } from '@/lib/queryKeys'
 import { useQuery } from '@tanstack/react-query'
+
+import type { DateRange } from '@/types/dateRange'
 
 interface StockDataCardProps {
   ticker: string
 }
 
-export default function StockDataCard(props: StockDataCardProps) {
+export default function StockDataCard({ ticker }: StockDataCardProps) {
+  const { data: dateRange } = useQuery<DateRange>({ queryKey: [DATE_RANGE_KEY] })
+
   const { data: stockData, isLoading, isError } = useQuery({
-    queryKey: ['stockData', props.ticker],
-    queryFn: () => getAggregates({ ticker: props.ticker }),
+    queryKey: ['stockData', ticker, JSON.stringify(dateRange)],
+    queryFn: () => getAggregates({ ticker, ...dateRange }),
+    enabled: !!dateRange?.from && !!dateRange?.to,
   })
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{ props.ticker }</CardTitle>
+        <CardTitle>{ ticker }</CardTitle>
       </CardHeader>
       <CardContent className="pt-0">
         {isLoading && <div>Loading...</div>}

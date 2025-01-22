@@ -1,3 +1,5 @@
+import { DateRange } from './dateRange'
+
 export interface GetAggregatesResponse {
   ticker: string
   queryCount: number
@@ -18,9 +20,7 @@ export interface GetAggregatesResponse {
   count: number
 }
 
-export interface GetAggregatesRequest {
+export interface GetAggregatesRequest extends DateRange {
   ticker: string,
-  from?: Date,
-  to?: Date,
 }
 
