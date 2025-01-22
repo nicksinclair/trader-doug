@@ -1,8 +1,8 @@
 'use client'
 
-import Footer from '@/components/patterns/Footer'
-import Navigation from '@/components/patterns/Navigation'
-import Dashboard from '@/components/stocks/Dashboard'
+import Dashboard from '@/components/layout/Dashboard'
+import Footer from '@/components/layout/Footer'
+import Navigation from '@/components/layout/Navigation'
 // import StockDataForm from '@/components/stocks/StockDataForm'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
