@@ -36,7 +36,7 @@ export default function StockDataCard({ ticker }: StockDataCardProps) {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
                   <div className="text-sm text-muted-foreground">Date</div>
-                  <div>{format(new Date(result.t), 'PPP')}</div>
+                  <div>{format(new Date(result.t), 'P')}</div>
                 </div>
                 <div>
                   <div className="text-sm text-muted-foreground">Open</div>

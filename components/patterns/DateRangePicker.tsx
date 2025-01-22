@@ -56,7 +56,7 @@ export default function DateRangePicker() {
                       )}
                     >
                       {field.value ? (
-                        format(field.value, 'PPP')
+                        format(field.value, 'P')
                       ) : (
                         <span>Pick a date</span>
                       )}
@@ -101,7 +101,7 @@ export default function DateRangePicker() {
                       )}
                     >
                       {field.value ? (
-                        format(field.value, 'PPP')
+                        format(field.value, 'P')
                       ) : (
                         <span>Pick a date</span>
                       )}
