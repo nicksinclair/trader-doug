@@ -1,7 +1,7 @@
 import { DEFAULT_TICKERS } from '@/lib/defaults'
 
 import DateRangePicker from '../patterns/DateRangePicker'
-import StockDataCard from '../stocks/StockDataCard'
+import StockData from '../stocks/StockData'
 import StockPicker from '../stocks/StockPicker'
 
 export default function Dashboard() {
@@ -15,7 +15,7 @@ export default function Dashboard() {
       </div>
 
       {DEFAULT_TICKERS.map((ticker) => (
-        <StockDataCard key={ticker} ticker={ticker} />
+        <StockData key={ticker} ticker={ticker} />
       ))}
     </div>
   )

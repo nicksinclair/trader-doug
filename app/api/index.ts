@@ -39,6 +39,26 @@ export async function getAggregates(request: GetAggregatesRequest) {
   //       v: 100,
   //       vw: 100,
   //     },
+  //     {
+  //       c: 100,
+  //       h: 100,
+  //       l: 100,
+  //       n: 100,
+  //       o: 100,
+  //       t: 101,
+  //       v: 100,
+  //       vw: 100,
+  //     },
+  //     {
+  //       c: 100,
+  //       h: 100,
+  //       l: 100,
+  //       n: 100,
+  //       o: 100,
+  //       t: 102,
+  //       v: 100,
+  //       vw: 100,
+  //     },
   //   ],
   //   status: 'OK',
   //   request_id: '1234',
@@ -57,7 +77,7 @@ export async function getTickers() {
 
   const data: GetTickersResponse = await response.json()
 
-  // const data = {
+  // const data: GetTickersResponse = {
   //   count: 1,
   //   request_id: 'e70013d92930de90e089dc8fa098888e',
   //   results: [

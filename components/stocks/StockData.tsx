@@ -3,17 +3,18 @@
 import { format } from 'date-fns'
 
 import { getAggregates } from '@/app/api'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 import { DATE_RANGE_KEY } from '@/lib/queryKeys'
 import { useQuery } from '@tanstack/react-query'
 
 import type { DateRange } from '@/types/dateRange'
 
-interface StockDataCardProps {
+interface StockDataProps {
   ticker: string
 }
 
-export default function StockDataCard({ ticker }: StockDataCardProps) {
+export default function StockData({ ticker }: StockDataProps) {
   const { data: dateRange } = useQuery<DateRange>({ queryKey: [DATE_RANGE_KEY] })
 
   const { data: stockData, isLoading, isError } = useQuery({
@@ -29,13 +30,12 @@ export default function StockDataCard({ ticker }: StockDataCardProps) {
   })
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{ ticker }</CardTitle>
-      </CardHeader>
-      <CardContent className="pt-0">
-        {isLoading && <div>Loading...</div>}
-        {(isError || stockData?.results?.length === 0) && <div>Could not load stock data</div>}
+    <div className="flex flex-row gap-4">
+      <h3 className="text-xl font-bold w-24">{ ticker }</h3>
+      <Separator orientation='vertical' />
+      {isLoading && <div>Loading...</div>}
+      {(isError || stockData?.results?.length === 0) && <div>Could not load stock data</div>}
+      <div className="flex flex-col w-full gap-4">
         {stockData?.results?.map((result) => (
           <Card key={result.t}>
             <CardContent className="pt-6">
@@ -60,8 +60,8 @@ export default function StockDataCard({ ticker }: StockDataCardProps) {
             </CardContent>
           </Card>
         ))}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }
 
