@@ -23,6 +23,8 @@ export function MultiSelectCombobox({
   const [open, setOpen] = React.useState(false)
   const [selectedItems, setSelectedItems] = React.useState<string[]>([])
 
+  console.info('options:', options)
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
