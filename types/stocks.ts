@@ -24,3 +24,29 @@ export interface GetAggregatesRequest extends DateRange {
   ticker: string,
 }
 
+interface Ticker {
+  active: boolean
+  base_currency_symbol?: string
+  cik?: string
+  composite_figi?: string
+  currency_name?: string
+  delisted_utc?: string
+  last_updated_utc?: string
+  locale: string
+  market: string
+  name: string
+  primary_exchange: string
+  share_class_figi?: string
+  ticker: string
+  type: string
+}
+
+export interface GetTickersResponse {
+  count: number
+  next_url?: string
+  request_id: string
+  results: Ticker[]
+  status: string
+}
+
+

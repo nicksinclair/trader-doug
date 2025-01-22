@@ -37,34 +37,34 @@ export function MultiSelectCombobox({
           <CommandList>
             <CommandEmpty>{emptyMessage}</CommandEmpty>
             <CommandGroup className="max-h-64 overflow-auto">
-                {options.map((option) => (
+              {options.map((option) => (
                 <CommandItem
-                    key={option.value}
-                    value={option.value}
-                    onSelect={() => {
+                  key={option.value}
+                  value={option.value}
+                  onSelect={() => {
                     setSelectedItems((prev) =>
-                        prev.includes(option.value)
+                      prev.includes(option.value)
                         ? prev.filter((item) => item !== option.value)
                         : [...prev, option.value],
                     )
-                    }}
+                  }}
                 >
-                    <Checkbox
+                  <Checkbox
                     checked={selectedItems.includes(option.value)}
                     onCheckedChange={() => {
-                        setSelectedItems((prev) =>
+                      setSelectedItems((prev) =>
                         prev.includes(option.value)
-                            ? prev.filter((item) => item !== option.value)
-                            : [...prev, option.value],
-                        )
+                          ? prev.filter((item) => item !== option.value)
+                          : [...prev, option.value],
+                      )
                     }}
-                    />
-                    <span className="ml-2">{option.label}</span>
-                    <Check
+                  />
+                  <span className="ml-2">{option.label}</span>
+                  <Check
                     className={cn('ml-auto h-4 w-4', selectedItems.includes(option.value) ? 'opacity-100' : 'opacity-0')}
-                    />
+                  />
                 </CommandItem>
-                ))}
+              ))}
             </CommandGroup>
           </CommandList>
         </Command>

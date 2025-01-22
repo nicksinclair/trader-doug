@@ -18,7 +18,13 @@ export default function StockDataCard({ ticker }: StockDataCardProps) {
 
   const { data: stockData, isLoading, isError } = useQuery({
     queryKey: ['stockData', ticker, JSON.stringify(dateRange)],
-    queryFn: () => getAggregates({ ticker, ...dateRange }),
+    queryFn: () => {
+      try {
+        return getAggregates({ ticker, ...dateRange })
+      } catch (error) {
+        console.error('Error fetching stock data:', error)
+      }
+    },
     enabled: !!dateRange?.from && !!dateRange?.to,
   })
 
@@ -29,8 +35,8 @@ export default function StockDataCard({ ticker }: StockDataCardProps) {
       </CardHeader>
       <CardContent className="pt-0">
         {isLoading && <div>Loading...</div>}
-        {(isError || stockData?.results?.length === 0) && <div>Could not load stock data</div>}
-        {stockData?.results?.map((result) => (
+        {(isError || stockData?.length === 0) && <div>Could not load stock data</div>}
+        {stockData?.map((result) => (
           <Card key={result.t}>
             <CardContent className="pt-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

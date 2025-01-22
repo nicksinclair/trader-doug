@@ -1,17 +1,17 @@
-import { DEFAULT_TICKERS } from '@/lib/defaults'
+import { getTickers } from '@/app/api'
 import { TICKERS_KEY } from '@/lib/queryKeys'
 import { useQuery } from '@tanstack/react-query'
 
 import { MultiSelectCombobox } from '../patterns/MultiSelectCombobox'
 
 export default function StockPicker() {
-  const { data: tickers } = useQuery({
+  const { data: tickerResults } = useQuery({
     queryKey: [TICKERS_KEY],
-    queryFn: () => DEFAULT_TICKERS,
+    queryFn: () => getTickers(),
   })
 
-  const options = (tickers ?? []).map((ticker) => ({
-    label: ticker,
+  const options = (tickerResults ?? []).map(({ name, ticker }) => ({
+    label: `${ticker} - ${name}`,
     value: ticker,
   }))
 

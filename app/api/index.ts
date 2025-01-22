@@ -1,6 +1,7 @@
 import { format, subDays } from 'date-fns'
 
-import { GetAggregatesRequest, GetAggregatesResponse } from '@/types/stocks'
+import { uniqBy } from '@/lib/utils'
+import { GetAggregatesRequest, GetAggregatesResponse, GetTickersResponse } from '@/types/stocks'
 
 export async function getAggregates(request: GetAggregatesRequest) {
   const { ticker, ...options } = request
@@ -44,5 +45,39 @@ export async function getAggregates(request: GetAggregatesRequest) {
   //   count: 1,
   // }
 
-  return data
+  return data.results
+}
+
+export async function getTickers() {
+  const response = await fetch('/api/tickers')
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch tickers')
+  }
+
+  const data: GetTickersResponse = await response.json()
+
+  // const data = {
+  //   count: 1,
+  //   request_id: 'e70013d92930de90e089dc8fa098888e',
+  //   results: [
+  //     {
+  //       active: true,
+  //       cik: '0001090872',
+  //       composite_figi: 'BBG000BWQYZ5',
+  //       currency_name: 'usd',
+  //       last_updated_utc: '2021-04-25T00:00:00Z',
+  //       locale: 'us',
+  //       market: 'stocks',
+  //       name: 'Agilent Technologies Inc.',
+  //       primary_exchange: 'XNYS',
+  //       share_class_figi: 'BBG001SCTQY4',
+  //       ticker: 'A',
+  //       type: 'CS',
+  //     },
+  //   ],
+  //   status: 'OK'
+  // }
+
+  return uniqBy(data.results, result => result.ticker)
 }
