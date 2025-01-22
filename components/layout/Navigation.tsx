@@ -1,7 +1,24 @@
+import { ChartNoAxesCombined, Github } from 'lucide-react'
+import Link from 'next/link'
+
+import { Button } from '@/components/ui/button'
+
 export default function Navigation() {
   return (
-    <nav className="flex items-center justify-between gap-4 p-4 border-b sticky top-0 bg-white">
-      <div>trader-doug</div>
-    </nav>
+    <div className="sticky top-0 bg-white border-b">
+      <nav className="flex items-center justify-between container w-full mx-auto p-4 gap-4 border-x">
+        <div className="flex flex-row items-center gap-4">
+          <ChartNoAxesCombined />
+          <div>
+          trader-doug
+          </div>
+        </div>
+        <Button variant={'ghost'} size="icon" asChild>
+          <Link href="https://github.com/nicksinclair/trader-doug">
+            <Github />
+          </Link>
+        </Button>
+      </nav>
+    </div>
   )
 }
