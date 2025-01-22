@@ -48,7 +48,6 @@ export default function StockDataCard(props: StockDataCardProps) {
             </CardContent>
           </Card>
         ))}
-
       </CardContent>
     </Card>
   )
