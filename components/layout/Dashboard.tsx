@@ -9,9 +9,10 @@ export default function Dashboard() {
     <div className="flex flex-col gap-8">
       <h1 className="text-4xl font-bold">Dashboard</h1>
 
-      <DateRangePicker />
-
-      <StockPicker />
+      <div className="flex flex-row items-end gap-4">
+        <DateRangePicker />
+        <StockPicker />
+      </div>
 
       {DEFAULT_TICKERS.map((ticker) => (
         <StockDataCard key={ticker} ticker={ticker} />

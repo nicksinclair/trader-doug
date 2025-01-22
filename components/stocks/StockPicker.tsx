@@ -1,4 +1,5 @@
 import { getTickers } from '@/app/api'
+import { DEFAULT_TICKERS } from '@/lib/defaults'
 import { TICKERS_KEY } from '@/lib/queryKeys'
 import { useQuery } from '@tanstack/react-query'
 
@@ -18,6 +19,7 @@ export default function StockPicker() {
   return (
     <MultiSelectCombobox
       options={options}
+      defaultSelected={DEFAULT_TICKERS}
       placeholder={'Select tickers...'}
       emptyMessage='No tickers found.'
     />

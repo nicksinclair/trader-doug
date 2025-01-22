@@ -11,17 +11,19 @@ import { cn } from '@/lib/utils'
 
 interface MultiSelectComboboxProps {
   options: { label: string; value: string }[]
+  defaultSelected?: string[]
   placeholder?: string
   emptyMessage?: string
 }
 
 export function MultiSelectCombobox({
   options = [],
+  defaultSelected = [],
   placeholder = 'Select items...',
   emptyMessage = 'No item found.',
 }: MultiSelectComboboxProps) {
   const [open, setOpen] = React.useState(false)
-  const [selectedItems, setSelectedItems] = React.useState<string[]>([])
+  const [selectedItems, setSelectedItems] = React.useState<string[]>(defaultSelected)
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -31,7 +33,7 @@ export function MultiSelectCombobox({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-full p-0">
+      <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
         <Command>
           <CommandInput placeholder="Search items..." />
           <CommandList>
