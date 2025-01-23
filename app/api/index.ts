@@ -36,7 +36,13 @@ export async function getSnapshotAllTickers(tickers: string[]) {
 
   const data: ISnapshotTickers = await response.json()
 
-  return uniqBy(data.tickers ?? [], snapshotInfo => snapshotInfo.ticker)
+  return data.tickers?.toSorted((a, b) => {
+    if (!a.ticker || !b.ticker) {
+      return 0
+    }
+
+    return a.ticker.localeCompare(b.ticker)
+  })
 }
 
 export async function getTickers() {
