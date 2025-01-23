@@ -13,6 +13,7 @@ interface MultiSelectComboboxProps {
   defaultSelected?: string[]
   placeholder?: string
   emptyMessage?: string
+  onChange?: (selectedItems: string[]) => void
 }
 
 export function MultiSelectCombobox({
@@ -20,9 +21,20 @@ export function MultiSelectCombobox({
   defaultSelected = [],
   placeholder = 'Select items...',
   emptyMessage = 'No item found.',
+  onChange,
 }: MultiSelectComboboxProps) {
   const [open, setOpen] = React.useState(false)
   const [selectedItems, setSelectedItems] = React.useState<string[]>(defaultSelected)
+
+  const handleSelectionChange = (value: string) => {
+    const updatedItems = selectedItems.includes(value) ? selectedItems.filter((item) => item !== value) : [...selectedItems, value]
+
+    setSelectedItems(updatedItems)
+
+    if (onChange) {
+      onChange(updatedItems)
+    }
+  }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -42,23 +54,11 @@ export function MultiSelectCombobox({
                 <CommandItem
                   key={option.value}
                   value={option.value}
-                  onSelect={() => {
-                    setSelectedItems((prev) =>
-                      prev.includes(option.value)
-                        ? prev.filter((item) => item !== option.value)
-                        : [...prev, option.value],
-                    )
-                  }}
+                  onSelect={() => handleSelectionChange(option.value)}
                 >
                   <Checkbox
                     checked={selectedItems.includes(option.value)}
-                    onCheckedChange={() => {
-                      setSelectedItems((prev) =>
-                        prev.includes(option.value)
-                          ? prev.filter((item) => item !== option.value)
-                          : [...prev, option.value],
-                      )
-                    }}
+                    onCheckedChange={() => handleSelectionChange(option.value)}
                   />
                   <span className="ml-2">{option.label}</span>
                 </CommandItem>
