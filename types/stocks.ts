@@ -1,31 +1,33 @@
 import { DateRange } from './dateRange'
 
+export interface Aggregate {
+  /** Close price */
+  c: number
+  /** Highest price */
+  h: number
+  /** Lowest price */
+  l: number
+  /** Number of transactions */
+  n: number
+  /** Open price */
+  o: number
+  /** Timestamp */
+  t: number
+  /** Trading volume */
+  v: number
+  /** Volume weighted average price */
+  vw: number
+}
+
 export interface GetAggregatesResponse {
-  ticker: string
-  queryCount: number
-  resultsCount: number
   adjusted: boolean
-  results: {
-    /** Close price */
-    c: number
-    /** Highest price */
-    h: number
-    /** Lowest price */
-    l: number
-    /** Number of transactions */
-    n: number
-    /** Open price */
-    o: number
-    /** Timestamp */
-    t: number
-    /** Trading volume */
-    v: number
-    /** Volume weighted average price */
-    vw: number
-  }[]
-  status: string
-  request_id: string
   count: number
+  queryCount: number
+  request_id: string
+  results: Aggregate[]
+  resultsCount: number
+  status: string
+  ticker: string
 }
 
 export interface GetAggregatesRequest extends DateRange {
