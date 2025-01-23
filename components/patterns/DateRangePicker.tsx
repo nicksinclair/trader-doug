@@ -25,7 +25,6 @@ export default function DateRangePicker() {
   })
 
   const updateDateRange = (newDateRange: DateRange) => {
-    console.info('Updating date range:', newDateRange)
     queryClient.setQueryData([DATE_RANGE_KEY], (prev: DateRange) => ({
       ...prev,
       ...newDateRange,

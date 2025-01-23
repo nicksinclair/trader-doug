@@ -34,11 +34,11 @@ export default function StockData({ ticker }: StockDataProps) {
     <div className="flex flex-row border-y">
       <h3 className="text-xl font-bold w-[120px] p-4">{ ticker }</h3>
       <Separator orientation="vertical" />
-      {isLoading && <div>Loading...</div>}
+      {isLoading && <div className="w-full m-auto text-center">Loading...</div>}
       {(isError || stockData?.results?.length === 0) && <div>Could not load stock data</div>}
-      <div className="flex flex-col w-full gap-4">
-        {stockData && <StockDataTable stockData={stockData.results} />}
-      </div>
+      {stockData && <div className="flex flex-col w-full gap-4">
+        {<StockDataTable stockData={stockData.results} />}
+      </div>}
     </div>
   )
 }
