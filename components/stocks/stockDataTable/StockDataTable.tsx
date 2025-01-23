@@ -1,9 +1,9 @@
 import { stockDataTableColumns } from '@/components/stocks/stockDataTable/StockDataTableColumns'
 import { DataTable } from '@/components/ui/data-table'
-import { Aggregate } from '@/types/stocks'
+import { IAggs } from '@polygon.io/client-js'
 
 interface StockDataTableProps {
-  stockData: Aggregate[]
+  stockData: IAggs['results']
 }
 
 export function StockDataTable({ stockData = [] }: StockDataTableProps) {

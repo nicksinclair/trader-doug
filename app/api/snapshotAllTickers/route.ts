@@ -1,10 +1,13 @@
 import { NextResponse } from 'next/server'
 
-import { referenceClient } from '../client'
+import { stocksClient } from '../client'
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+  const tickers = searchParams.get('tickers') ?? undefined
+
   try {
-    const response = await referenceClient.tickers({ market: 'stocks', limit: 500 })
+    const response = await stocksClient.snapshotAllTickers({ tickers })
 
     return NextResponse.json(response)
   } catch (error) {

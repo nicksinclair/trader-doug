@@ -2,10 +2,10 @@
 
 import { format } from 'date-fns'
 
-import { Aggregate } from '@/types/stocks'
+import { IAggs } from '@polygon.io/client-js'
 import { ColumnDef } from '@tanstack/react-table'
 
-export const stockDataTableColumns: ColumnDef<Aggregate>[] = [
+export const stockDataTableColumns: ColumnDef<NonNullable<IAggs['results']>[number]>[] = [
   {
     accessorKey: 't',
     header: 'Date',
