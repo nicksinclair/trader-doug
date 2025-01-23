@@ -10,9 +10,9 @@ const queryClient = new QueryClient()
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div id="app-layout" className="grid grid-rows-layout h-screen">
+      <div id="app-layout" className="grid grid-rows-layout min-h-screen">
         <Navigation />
-        <div id="app-content" className="container mx-auto py-10 flex flex-col border-l border-r p-4 gap-4">
+        <div id="app-content" className="bg-white container mx-auto py-10 flex flex-col border-l border-r gap-4">
           <Dashboard />
         </div>
         <Footer />

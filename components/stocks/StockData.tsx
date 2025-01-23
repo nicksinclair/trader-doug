@@ -30,12 +30,12 @@ export default function StockData({ ticker }: StockDataProps) {
   })
 
   return (
-    <div className="flex flex-row gap-4">
-      <h3 className="text-xl font-bold w-24">{ ticker }</h3>
+    <div className="flex flex-row border-y">
+      <h3 className="text-xl font-bold w-[120px] p-4">{ ticker }</h3>
       <Separator orientation='vertical' />
       {isLoading && <div>Loading...</div>}
       {(isError || stockData?.results?.length === 0) && <div>Could not load stock data</div>}
-      <div className="flex flex-col w-full gap-4">
+      <div className="flex flex-col w-full p-4 gap-4">
         {stockData?.results?.map((result) => (
           <Card key={result.t}>
             <CardContent className="pt-6">
