@@ -1,10 +1,8 @@
 'use client'
 
-// import { format } from 'date-fns'
-
 import { getAggregates } from '@/app/api'
-// import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { DATE_RANGE_KEY } from '@/lib/queryKeys'
 import { useQuery } from '@tanstack/react-query'
 
@@ -34,11 +32,24 @@ export default function StockData({ ticker }: StockDataProps) {
     <div className="flex flex-row border-y">
       <h3 className="text-xl font-bold w-[120px] p-4">{ ticker }</h3>
       <Separator orientation="vertical" />
-      {isLoading && <div className="w-full m-auto text-center">Loading...</div>}
-      {(isError || stockData?.results?.length === 0) && <div>Could not load stock data</div>}
-      {stockData && <div className="flex flex-col w-full gap-4">
-        {<StockDataTable stockData={stockData.results} />}
-      </div>}
+      <div className="w-full">
+        <Tabs defaultValue="table">
+          <TabsList className="w-full">
+            <TabsTrigger value="table">Table</TabsTrigger>
+            <TabsTrigger value="news">News</TabsTrigger>
+          </TabsList>
+          <TabsContent value="table">
+            {isLoading && <div className="w-full m-auto p-4 text-center">Loading stock data...</div>}
+            {(isError || stockData?.results?.length === 0) && <div>Could not load stock data</div>}
+            {stockData && <div className="flex flex-col w-full gap-4">
+              {<StockDataTable stockData={stockData.results} />}
+            </div>}
+          </TabsContent>
+          <TabsContent value="news">
+            <div className="w-full m-auto p-4 text-center">Loading news...</div>
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   )
 }
