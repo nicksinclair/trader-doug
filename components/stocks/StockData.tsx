@@ -1,6 +1,6 @@
 'use client'
 
-import { getAggregates } from '@/app/api'
+import { getAggregates, getTickerNews } from '@/app/api'
 import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { DATE_RANGE_KEY } from '@/lib/queryKeys'
@@ -16,7 +16,7 @@ interface StockDataProps {
 export default function StockData({ ticker }: StockDataProps) {
   const { data: dateRange } = useQuery<DateRange>({ queryKey: [DATE_RANGE_KEY] })
 
-  const { data: stockData, isLoading, isError } = useQuery({
+  const { data: stockData, isLoading: isLoadingStockData, isError: isErrorStockData } = useQuery({
     queryKey: ['stockData', ticker, JSON.stringify(dateRange)],
     queryFn: () => {
       try {
@@ -26,6 +26,17 @@ export default function StockData({ ticker }: StockDataProps) {
       }
     },
     enabled: !!dateRange?.from && !!dateRange?.to,
+  })
+
+  const { data: tickerNews, isLoading: isLoadingNews, isError: isErrorNews } = useQuery({
+    queryKey: ['news', ticker],
+    queryFn: () => {
+      try {
+        return getTickerNews(ticker)
+      } catch (error) {
+        console.error('Error fetching news:', error)
+      }
+    },
   })
 
   return (
@@ -39,14 +50,20 @@ export default function StockData({ ticker }: StockDataProps) {
             <TabsTrigger value="news">News</TabsTrigger>
           </TabsList>
           <TabsContent value="table">
-            {isLoading && <div className="w-full m-auto p-4 text-center">Loading stock data...</div>}
-            {(isError || stockData?.results?.length === 0) && <div>Could not load stock data</div>}
+            {isLoadingStockData && <div className="w-full m-auto p-4 text-center">Loading stock data...</div>}
+            {isErrorStockData && <div className="w-full m-auto p-4 text-center">Could not load stock data</div>}
+            {stockData?.results?.length === 0 && <div className="w-full m-auto p-4 text-center">No stock data to display</div>}
             {stockData && <div className="flex flex-col w-full gap-4">
               {<StockDataTable stockData={stockData.results} />}
             </div>}
           </TabsContent>
           <TabsContent value="news">
-            <div className="w-full m-auto p-4 text-center">Loading news...</div>
+            {isLoadingNews && <div className="w-full m-auto p-4 text-center">Loading news...</div>}
+            {isErrorNews && <div className="w-full m-auto p-4 text-center">Could not load news</div>}
+            {tickerNews?.length === 0 && <div className="w-full m-auto p-4 text-center">No news to display</div>}
+            {tickerNews && <div className="flex flex-col w-full p-4 gap-4">
+              <div>Ticker News</div>
+            </div>}
           </TabsContent>
         </Tabs>
       </div>

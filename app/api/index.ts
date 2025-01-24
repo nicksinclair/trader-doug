@@ -2,7 +2,7 @@ import { format, subDays } from 'date-fns'
 
 import { uniqBy } from '@/lib/utils'
 import { GetAggregatesRequest } from '@/types/stocks'
-import { IAggs, ISnapshotTickers, ITickers } from '@polygon.io/client-js'
+import { IAggs, ISnapshotTickers, ITickerNews, ITickers } from '@polygon.io/client-js'
 
 export async function getAggregates(request: GetAggregatesRequest) {
   const { ticker, ...options } = request
@@ -55,4 +55,16 @@ export async function getTickers() {
   const data: ITickers = await response.json()
 
   return uniqBy(data.results, result => result.ticker)
+}
+
+export async function getTickerNews(ticker: string) {
+  const response = await fetch(`/api/tickerNews?ticker=${ticker}`)
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch ticker news')
+  }
+
+  const data: ITickerNews = await response.json()
+
+  return data.results.sort((a, b) => new Date(b.published_utc).getTime() - new Date(a.published_utc).getTime())
 }
