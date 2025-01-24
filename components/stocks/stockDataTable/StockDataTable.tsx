@@ -7,8 +7,10 @@ interface StockDataTableProps {
 }
 
 export function StockDataTable({ stockData = [] }: StockDataTableProps) {
+  const sortedStockData = stockData.sort((a, b) => new Date(b.t ?? 0).getTime() - new Date(a.t ?? 0).getTime())
+
   return (
-    <DataTable columns={stockDataTableColumns} data={stockData} />
+    <DataTable columns={stockDataTableColumns} data={sortedStockData} />
   )
 }
 

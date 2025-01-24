@@ -1,11 +1,11 @@
 export const DEFAULT_TICKERS = [
   'AAPL',
-  'MSFT',
-  'GOOG',
   'AMZN',
-  'FB',
-  'TSLA',
+  'GOOG',
+  'META',
+  'MSFT',
   'NFLX',
+  'TSLA',
 ]
 
 export const SP_500_TICKERS = [

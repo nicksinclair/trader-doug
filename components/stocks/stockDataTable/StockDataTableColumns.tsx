@@ -14,25 +14,33 @@ export const stockDataTableColumns: ColumnDef<NonNullable<IAggs['results']>[numb
   {
     accessorKey: 'o',
     header: 'Open',
-    cell: ({ row }) => `$${parseFloat(row.getValue('o')).toFixed(2)}`,
+    cell: ({ row }) => formatCurrency(parseFloat(row.getValue('o'))),
   },
   {
     accessorKey: 'c',
     header: 'Close',
-    cell: ({ row }) => `$${parseFloat(row.getValue('o')).toFixed(2)}`,
+    cell: ({ row }) => formatCurrency(parseFloat(row.getValue('c'))),
   },
   {
     accessorKey: 'h',
     header: 'High',
-    cell: ({ row }) => `$${parseFloat(row.getValue('o')).toFixed(2)}`,
+    cell: ({ row }) => formatCurrency(parseFloat(row.getValue('h'))),
   },
   {
     accessorKey: 'l',
     header: 'Low',
-    cell: ({ row }) => `$${parseFloat(row.getValue('o')).toFixed(2)}`,
+    cell: ({ row }) => formatCurrency(parseFloat(row.getValue('l'))),
   },
   {
     accessorKey: 'v',
     header: 'Volume',
+    cell: ({ row }) => parseInt(row.getValue('v')).toLocaleString(),
   },
 ]
+
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(amount)
+}

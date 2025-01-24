@@ -1,3 +1,4 @@
+import { DEFAULT_TICKERS } from '@/lib/defaults'
 import { SELECTED_TICKERS_KEY } from '@/lib/queryKeys'
 import { useQuery } from '@tanstack/react-query'
 
@@ -8,7 +9,7 @@ import StockPicker from '../stocks/StockPicker'
 export default function Dashboard() {
   const { data: selectedTickers } = useQuery<string[]>({
     queryKey: [SELECTED_TICKERS_KEY],
-    initialData: [],
+    initialData: DEFAULT_TICKERS,
   })
 
   return (
