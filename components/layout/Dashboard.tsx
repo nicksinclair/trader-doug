@@ -18,8 +18,8 @@ export default function Dashboard() {
         <h1 className="text-4xl font-bold">Dashboard</h1>
 
         <div className="flex flex-row items-end gap-4">
-          <DateRangePicker />
           <StockPicker />
+          <DateRangePicker />
         </div>
       </div>
 
