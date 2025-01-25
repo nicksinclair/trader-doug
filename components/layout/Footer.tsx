@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 export default function Footer() {
   return (
     <div className="sticky top-0 bg-white border-t">
-      <nav className="flex items-center justify-between md:container w-full mx-auto p-4 gap-4 border-x">
+      <nav className="flex items-center justify-between container w-full mx-auto p-4 gap-4 border-x">
         <div>
           Created by Nick Sinclair
         </div>

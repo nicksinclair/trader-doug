@@ -12,7 +12,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <div id="app-layout" className="grid grid-rows-layout min-h-screen">
         <Navigation />
-        <div id="app-content" className="bg-white md:container mx-auto py-10 flex flex-col border-x gap-4">
+        <div id="app-content" className="bg-white container mx-auto py-10 flex flex-col border-x gap-4">
           <Dashboard />
         </div>
         <Footer />

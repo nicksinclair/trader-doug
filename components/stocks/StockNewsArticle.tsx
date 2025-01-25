@@ -20,10 +20,16 @@ interface StockNewsArticleProps {
 
 interface ImageLoaderParams {
   src: string;
+  width: number;
+  quality?: number;
 }
 
-const imageLoader = ({ src }: ImageLoaderParams) => {
-  return src
+const imageLoader = ({ src, width, quality }: ImageLoaderParams) => {
+  const params = new URLSearchParams({
+    width: width.toString(),
+    ...(quality && { quality: quality.toString() }),
+  })
+  return `${src}?${params.toString()}`
 }
 
 export default function StockNewsArticle({
@@ -46,7 +52,7 @@ export default function StockNewsArticle({
         <div className="flex flex-col justify-between h-full p-4 gap-2">
           <CardHeader className="line-clamp-3">{title}</CardHeader>
 
-          <CardDescription className="flex flex-row justify-between items-center gap-2">
+          <CardDescription className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-2">
             {publisher.name && <span className="text-sm truncate">
               {publisher.name}
             </span>}

@@ -37,12 +37,12 @@ export default function DateRangePicker() {
 
   return (
     <Form {...form}>
-      <div className="flex gap-4">
+      <div className="flex gap-4 w-full md:w-min">
         <FormField
           control={form.control}
           name="from"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
+            <FormItem className="flex flex-col w-full">
               <FormLabel>From</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
@@ -87,7 +87,7 @@ export default function DateRangePicker() {
           control={form.control}
           name="to"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
+            <FormItem className="flex flex-col w-full">
               <FormLabel>To</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
