@@ -1,12 +1,12 @@
 'use client'
 
 import { getAggregates, getTickerNews } from '@/app/api'
+import { StockDataTable } from '@/components/stocks/stockDataTable/StockDataTable'
+import StockNewsArticle from '@/components/stocks/StockNewsArticle'
 import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { DATE_RANGE_KEY } from '@/lib/queryKeys'
 import { useQuery } from '@tanstack/react-query'
-
-import { StockDataTable } from './stockDataTable/StockDataTable'
 
 import type { DateRange } from '@/types/dateRange'
 interface StockDataProps {
@@ -41,7 +41,7 @@ export default function StockData({ ticker }: StockDataProps) {
 
   return (
     <div className="flex flex-row border-y">
-      <h3 className="text-xl font-bold w-[120px] p-4">{ ticker }</h3>
+      <h3 className="text-xl font-bold w-[180px] p-4">{ ticker }</h3>
       <Separator orientation="vertical" />
       <div className="w-full">
         <Tabs defaultValue="table">
@@ -61,8 +61,16 @@ export default function StockData({ ticker }: StockDataProps) {
             {isLoadingNews && <div className="w-full m-auto p-4 text-center">Loading news...</div>}
             {isErrorNews && <div className="w-full m-auto p-4 text-center">Could not load news</div>}
             {tickerNews?.length === 0 && <div className="w-full m-auto p-4 text-center">No news to display</div>}
-            {tickerNews && <div className="flex flex-col w-full p-4 gap-4">
-              <div>Ticker News</div>
+            {tickerNews && <div className="grid grid-cols-3 w-full p-4 gap-4">
+              {tickerNews.map((article, index) => <StockNewsArticle
+                key={index}
+                author={article.author}
+                date={article.published_utc}
+                image={article.image_url}
+                publisher={article.publisher}
+                title={article.title}
+                url={article.article_url}
+              />)}
             </div>}
           </TabsContent>
         </Tabs>
