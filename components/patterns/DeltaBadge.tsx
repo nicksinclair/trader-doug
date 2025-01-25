@@ -8,7 +8,7 @@ interface DeltaBadgeProps {
 
 export default function DeltaBadge({ change }: DeltaBadgeProps) {
   return (
-    <div>
+    <div className="flex flex-row md:flex-col items-center md:items-start gap-2">
       {change > 0 ? <ArrowUpRight /> : <ArrowDownRight />}
       <div className={cn(
         'w-min px-3 py-1 text-sm rounded-full',

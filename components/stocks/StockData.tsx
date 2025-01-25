@@ -6,7 +6,6 @@ import { getAggregates, getTickerNews, Snapshots } from '@/app/api'
 import DeltaBadge from '@/components/patterns/DeltaBadge'
 import { StockDataTable } from '@/components/stocks/stockDataTable/StockDataTable'
 import StockNewsArticle from '@/components/stocks/StockNewsArticle'
-import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { DATE_RANGE_KEY, STOCK_DATA_KEY, TICKER_NEWS_KEY } from '@/lib/queryKeys'
 import { useQuery } from '@tanstack/react-query'
@@ -46,9 +45,9 @@ export default function StockData({ ticker, snapshot }: StockDataProps) {
   const { todaysChangePerc, updated } = snapshot ?? {}
 
   return (
-    <div className="flex flex-row border-y">
-      <div className="flex flex-col justify-between w-[180px] p-4">
-        <div>
+    <div className="flex flex-col md:flex-row border-y">
+      <div className="flex flex-row md:flex-col justify-between w-full md:w-[180px] p-4 border-b md:border-r">
+        <div className="flex flex-row md:flex-col items-center md:items-start gap-2 md:gap-0">
           <h3 className="text-xl font-bold">{ ticker }</h3>
           {todaysChangePerc && (
             <DeltaBadge change={todaysChangePerc} />
@@ -60,7 +59,7 @@ export default function StockData({ ticker, snapshot }: StockDataProps) {
           {format(new Date(updated / 1000000), 'P h:mm a')}
         </div>}
       </div>
-      <Separator orientation="vertical" />
+      {/* <Separator orientation="vertical" /> */}
       <div className="w-full">
         <Tabs defaultValue="table">
           <TabsList className="w-full">

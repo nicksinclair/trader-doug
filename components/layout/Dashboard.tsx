@@ -34,7 +34,7 @@ export default function Dashboard() {
       <div className="flex flex-col px-4 gap-8">
         <h1 className="text-4xl font-bold">Dashboard</h1>
 
-        <div className="flex flex-row items-end gap-4">
+        <div className="flex flex-col md:flex-row items-end gap-4">
           <StockPicker />
           <DateRangePicker />
         </div>
