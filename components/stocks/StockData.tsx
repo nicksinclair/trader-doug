@@ -46,7 +46,7 @@ export default function StockData({ ticker, snapshot }: StockDataProps) {
 
   return (
     <div className="flex flex-col md:flex-row border-y">
-      <div className="flex flex-row md:flex-col justify-between w-full md:w-[180px] p-4 border-b md:border-r">
+      <div className="flex flex-row md:flex-col justify-between w-full md:w-[180px] p-4 md:border-r">
         <div className="flex flex-row md:flex-col items-center md:items-start gap-2 md:gap-0">
           <h3 className="text-xl font-bold">{ ticker }</h3>
           {todaysChangePerc && (
@@ -59,8 +59,7 @@ export default function StockData({ ticker, snapshot }: StockDataProps) {
           {format(new Date(updated / 1000000), 'P h:mm a')}
         </div>}
       </div>
-      {/* <Separator orientation="vertical" /> */}
-      <div className="w-full">
+      <div className="w-full border-t md:border-none">
         <Tabs defaultValue="table">
           <TabsList className="w-full">
             <TabsTrigger value="table">Table</TabsTrigger>
@@ -78,7 +77,7 @@ export default function StockData({ ticker, snapshot }: StockDataProps) {
             {isLoadingNews && <div className="w-full m-auto p-4 text-center">Loading news...</div>}
             {isErrorNews && <div className="w-full m-auto p-4 text-center">Could not load news</div>}
             {tickerNews?.length === 0 && <div className="w-full m-auto p-4 text-center">No news to display</div>}
-            {tickerNews && <div className="grid grid-cols-3 w-full p-4 gap-4">
+            {tickerNews && <div className="grid grid-rows-3 md:grid-rows-1 md:grid-cols-3 w-full p-4 gap-4">
               {tickerNews.map((article, index) => <StockNewsArticle
                 key={index}
                 date={article.published_utc}
