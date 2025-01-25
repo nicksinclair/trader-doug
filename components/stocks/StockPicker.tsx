@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { getSnapshotAllTickers } from '@/app/api'
 import { Label } from '@/components/ui/label'
 import { DEFAULT_TICKERS, SP_500_TICKERS } from '@/lib/defaults'
@@ -14,10 +16,10 @@ export default function StockPicker() {
     queryFn: () => getSnapshotAllTickers(SP_500_TICKERS),
   })
 
-  const options = (tickerResults ?? []).map(({ ticker }, index) => ({
+  const options = useMemo(() => (tickerResults ?? []).map(({ ticker }, index) => ({
     label: ticker ?? '',
     value: ticker ?? index.toString(),
-  }))
+  })), [tickerResults])
 
   const onChange = (selectedItems: string[]) => {
     queryClient.setQueryData([SELECTED_TICKERS_KEY], selectedItems)

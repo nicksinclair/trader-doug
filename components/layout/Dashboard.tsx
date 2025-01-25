@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { Snapshots } from '@/app/api'
 import { DEFAULT_TICKERS } from '@/lib/defaults'
 import { SELECTED_TICKERS_KEY, TICKERS_KEY } from '@/lib/queryKeys'
@@ -15,14 +17,17 @@ export default function Dashboard() {
     initialData: DEFAULT_TICKERS,
   })
 
-  const snapshotsByTicker: { [ticker: string]: NonNullable<Snapshots>[0] } = {}
-  if (tickerSnapshots) {
-    tickerSnapshots.forEach((snapshot) => {
-      if (snapshot.ticker) {
-        snapshotsByTicker[snapshot.ticker] = snapshot
-      }
-    })
-  }
+  const snapshotsByTicker = useMemo(() => {
+    const snapshots: { [ticker: string]: NonNullable<Snapshots>[0] } = {}
+    if (tickerSnapshots) {
+      tickerSnapshots.forEach((snapshot) => {
+        if (snapshot.ticker) {
+          snapshots[snapshot.ticker] = snapshot
+        }
+      })
+    }
+    return snapshots
+  }, [tickerSnapshots])
 
   return (
     <div className="flex flex-col gap-8">

@@ -10,7 +10,7 @@ export default function Navigation() {
         <div className="flex flex-row items-center gap-4">
           <ChartNoAxesCombined />
           <div>
-          trader-doug
+          trader doug
           </div>
         </div>
         <Button variant={'ghost'} size="icon" asChild>

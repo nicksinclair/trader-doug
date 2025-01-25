@@ -16,7 +16,7 @@ export default function Footer() {
             </Link>
           </Button>
           <Button variant="link" asChild>
-            <Link href="https://github.com/nicksinclair">
+            <Link href="https://nicksinclair.github.io">
             Website
             </Link>
           </Button>
