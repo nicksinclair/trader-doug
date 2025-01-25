@@ -1,23 +1,27 @@
 'use client'
 
-import { getAggregates, getTickerNews } from '@/app/api'
+import { format } from 'date-fns'
+
+import { getAggregates, getTickerNews, Snapshots } from '@/app/api'
+import DeltaBadge from '@/components/patterns/DeltaBadge'
 import { StockDataTable } from '@/components/stocks/stockDataTable/StockDataTable'
 import StockNewsArticle from '@/components/stocks/StockNewsArticle'
 import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { DATE_RANGE_KEY } from '@/lib/queryKeys'
+import { DATE_RANGE_KEY, STOCK_DATA_KEY, TICKER_NEWS_KEY } from '@/lib/queryKeys'
 import { useQuery } from '@tanstack/react-query'
 
 import type { DateRange } from '@/types/dateRange'
 interface StockDataProps {
   ticker: string
+  snapshot?: NonNullable<Snapshots>[0]
 }
 
-export default function StockData({ ticker }: StockDataProps) {
+export default function StockData({ ticker, snapshot }: StockDataProps) {
   const { data: dateRange } = useQuery<DateRange>({ queryKey: [DATE_RANGE_KEY] })
 
   const { data: stockData, isLoading: isLoadingStockData, isError: isErrorStockData } = useQuery({
-    queryKey: ['stockData', ticker, JSON.stringify(dateRange)],
+    queryKey: [STOCK_DATA_KEY, ticker, JSON.stringify(dateRange)],
     queryFn: () => {
       try {
         return getAggregates({ ticker, ...dateRange })
@@ -29,7 +33,7 @@ export default function StockData({ ticker }: StockDataProps) {
   })
 
   const { data: tickerNews, isLoading: isLoadingNews, isError: isErrorNews } = useQuery({
-    queryKey: ['news', ticker],
+    queryKey: [TICKER_NEWS_KEY, ticker],
     queryFn: () => {
       try {
         return getTickerNews(ticker)
@@ -39,9 +43,23 @@ export default function StockData({ ticker }: StockDataProps) {
     },
   })
 
+  const { todaysChangePerc, updated } = snapshot ?? {}
+
   return (
     <div className="flex flex-row border-y">
-      <h3 className="text-xl font-bold w-[180px] p-4">{ ticker }</h3>
+      <div className="flex flex-col justify-between w-[180px] p-4">
+        <div>
+          <h3 className="text-xl font-bold">{ ticker }</h3>
+          {todaysChangePerc && (
+            <DeltaBadge change={todaysChangePerc} />
+          )}
+        </div>
+        {/* Updated date is in nanoseconds */}
+        {updated && <div className="text-xs text-muted-foreground">
+          Updated<br />
+          {format(new Date(updated / 1000000), 'P h:mm a')}
+        </div>}
+      </div>
       <Separator orientation="vertical" />
       <div className="w-full">
         <Tabs defaultValue="table">
@@ -64,7 +82,6 @@ export default function StockData({ ticker }: StockDataProps) {
             {tickerNews && <div className="grid grid-cols-3 w-full p-4 gap-4">
               {tickerNews.map((article, index) => <StockNewsArticle
                 key={index}
-                author={article.author}
                 date={article.published_utc}
                 image={article.image_url}
                 publisher={article.publisher}

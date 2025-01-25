@@ -4,6 +4,8 @@ import { uniqBy } from '@/lib/utils'
 import { GetAggregatesRequest } from '@/types/stocks'
 import { IAggs, ISnapshotTickers, ITickerNews, ITickers } from '@polygon.io/client-js'
 
+export type Snapshots = Awaited<ReturnType<typeof getSnapshotAllTickers>>
+
 export async function getAggregates(request: GetAggregatesRequest) {
   const { ticker, ...options } = request
 

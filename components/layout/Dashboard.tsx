@@ -1,5 +1,6 @@
+import { Snapshots } from '@/app/api'
 import { DEFAULT_TICKERS } from '@/lib/defaults'
-import { SELECTED_TICKERS_KEY } from '@/lib/queryKeys'
+import { SELECTED_TICKERS_KEY, TICKERS_KEY } from '@/lib/queryKeys'
 import { useQuery } from '@tanstack/react-query'
 
 import DateRangePicker from '../patterns/DateRangePicker'
@@ -7,10 +8,21 @@ import StockData from '../stocks/StockData'
 import StockPicker from '../stocks/StockPicker'
 
 export default function Dashboard() {
+  const { data: tickerSnapshots } = useQuery<Snapshots>({ queryKey: [TICKERS_KEY] })
+
   const { data: selectedTickers } = useQuery<string[]>({
     queryKey: [SELECTED_TICKERS_KEY],
     initialData: DEFAULT_TICKERS,
   })
+
+  const snapshotsByTicker: { [ticker: string]: NonNullable<Snapshots>[0] } = {}
+  if (tickerSnapshots) {
+    tickerSnapshots.forEach((snapshot) => {
+      if (snapshot.ticker) {
+        snapshotsByTicker[snapshot.ticker] = snapshot
+      }
+    })
+  }
 
   return (
     <div className="flex flex-col gap-8">
@@ -25,7 +37,7 @@ export default function Dashboard() {
 
       {selectedTickers.length === 0 && <div className='m-auto'>Select a ticker to see stock data</div>}
       {selectedTickers.map((ticker) => (
-        <StockData key={ticker} ticker={ticker} />
+        <StockData key={ticker} ticker={ticker} snapshot={snapshotsByTicker[ticker]} />
       ))}
     </div>
   )
