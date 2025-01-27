@@ -59,4 +59,5 @@ export const SP_500_TICKERS = [
   'VFC', 'VTRS', 'VICI', 'V', 'VNO', 'VMC', 'WAB', 'WBA', 'WMT', 'WBD',
   'WM', 'WAT', 'WEC', 'WFC', 'WELL', 'WST', 'WDC', 'WRK', 'WY', 'WHR',
   'WMB', 'WTW', 'WYNN', 'XEL', 'XYL', 'YUM', 'ZBRA', 'ZBH', 'ZION', 'ZS',
+  'COST',
 ]

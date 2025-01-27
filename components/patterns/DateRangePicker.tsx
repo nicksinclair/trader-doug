@@ -12,7 +12,7 @@ import { DateRange } from '@/types/dateRange'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 const defaultDateRange: DateRange = {
-  from: subDays(new Date(), 3),
+  from: subDays(new Date(), 8),
   to: subDays(new Date(), 1),
 }
 
