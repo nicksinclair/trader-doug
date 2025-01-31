@@ -1,6 +1,6 @@
 'use client'
 
-import { ChevronsUpDown } from 'lucide-react'
+import { ChevronsUpDown, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -44,6 +44,14 @@ export function MultiSelectCombobox({
     }
   }
 
+  const handleClearSelection = () => {
+    setSelectedItems([])
+
+    if (onChange) {
+      onChange([])
+    }
+  }
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -57,7 +65,7 @@ export function MultiSelectCombobox({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
+      <PopoverContent className="w-[--radix-popover-trigger-width] p-0 overflow-hidden">
         <Command>
           <CommandInput placeholder="Search items..." />
           <CommandList>
@@ -79,6 +87,14 @@ export function MultiSelectCombobox({
             </CommandGroup>
           </CommandList>
         </Command>
+        {selectedItems.length > 0 && (
+          <div className="border-t flex justify-end">
+            <Button variant="ghost" size="sm" onClick={handleClearSelection} className="w-full rounded-none">
+              <X />
+              Clear Selection
+            </Button>
+          </div>
+        )}
       </PopoverContent>
     </Popover>
   )
