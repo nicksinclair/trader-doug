@@ -16,3 +16,18 @@ export function uniqBy<T, K>(array: T[], keyFn: (item: T) => K): T[] {
     return true
   })
 }
+
+export function safeJSONParse<T>(value: string | null): T | undefined {
+  if (!value) {
+    return undefined
+  }
+
+  try {
+    const jsonValue: T = JSON.parse(value)
+
+    return jsonValue
+  } catch (error) {
+    console.error('Error parsing JSON:', error)
+    return undefined
+  }
+}

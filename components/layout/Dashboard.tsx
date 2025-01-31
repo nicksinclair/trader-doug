@@ -1,20 +1,31 @@
-import { useMemo } from 'react'
+'use client'
+
+import { useEffect, useMemo } from 'react'
 
 import { Snapshots } from '@/app/api'
+import DateRangePicker from '@/components/patterns/DateRangePicker'
+import StockData from '@/components/stocks/StockData'
+import StockPicker from '@/components/stocks/StockPicker'
 import { DEFAULT_TICKERS } from '@/lib/defaults'
+import { tdLocalStorage } from '@/lib/localStorage'
 import { SELECTED_TICKERS_KEY, TICKERS_KEY } from '@/lib/queryKeys'
-import { useQuery } from '@tanstack/react-query'
-
-import DateRangePicker from '../patterns/DateRangePicker'
-import StockData from '../stocks/StockData'
-import StockPicker from '../stocks/StockPicker'
+import { safeJSONParse } from '@/lib/utils'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 export default function Dashboard() {
+  const queryClient = useQueryClient()
+
+  // Fetch localStorage tickers after mount to avoid hydration mismatch
+  useEffect(() => {
+    const storedTickers = safeJSONParse<string[]>(tdLocalStorage.getItem('selectedTickers'))
+    // If there are no tickers in localStorage, use the default tickers
+    queryClient.setQueryData([SELECTED_TICKERS_KEY], (storedTickers && storedTickers.length !== 0) ? storedTickers : DEFAULT_TICKERS)
+  }, [queryClient])
+
   const { data: tickerSnapshots } = useQuery<Snapshots>({ queryKey: [TICKERS_KEY] })
 
   const { data: selectedTickers } = useQuery<string[]>({
     queryKey: [SELECTED_TICKERS_KEY],
-    initialData: DEFAULT_TICKERS,
   })
 
   const snapshotsByTicker = useMemo(() => {
@@ -40,8 +51,9 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {selectedTickers.length === 0 && <div className='m-auto'>Select a ticker to see stock data</div>}
-      {selectedTickers.map((ticker) => (
+      {!selectedTickers && <div className='m-auto'>Loading stock data...</div>}
+      {selectedTickers?.length === 0 && <div className='m-auto'>Select a ticker to see stock data</div>}
+      {selectedTickers && selectedTickers.map((ticker) => (
         <StockData key={ticker} ticker={ticker} snapshot={snapshotsByTicker[ticker]} />
       ))}
     </div>

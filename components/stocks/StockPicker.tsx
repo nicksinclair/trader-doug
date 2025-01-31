@@ -2,7 +2,8 @@ import { useMemo } from 'react'
 
 import { getSnapshotAllTickers } from '@/app/api'
 import { Label } from '@/components/ui/label'
-import { DEFAULT_TICKERS, SP_500_TICKERS } from '@/lib/defaults'
+import { SP_500_TICKERS } from '@/lib/defaults'
+import { tdLocalStorage } from '@/lib/localStorage'
 import { SELECTED_TICKERS_KEY, TICKERS_KEY } from '@/lib/queryKeys'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
@@ -16,6 +17,10 @@ export default function StockPicker() {
     queryFn: () => getSnapshotAllTickers(SP_500_TICKERS),
   })
 
+  const { data: selectedTickers, isLoading: isLoadingSelectedTickers } = useQuery<string[]>({
+    queryKey: [SELECTED_TICKERS_KEY],
+  })
+
   const options = useMemo(() => (tickerResults ?? []).map(({ ticker }, index) => ({
     label: ticker ?? '',
     value: ticker ?? index.toString(),
@@ -23,6 +28,7 @@ export default function StockPicker() {
 
   const onChange = (selectedItems: string[]) => {
     queryClient.setQueryData([SELECTED_TICKERS_KEY], selectedItems)
+    tdLocalStorage.setItem('selectedTickers', JSON.stringify(selectedItems))
   }
 
   return (
@@ -30,9 +36,10 @@ export default function StockPicker() {
       <Label>Select stock tickers</Label>
       <MultiSelectCombobox
         options={options}
-        defaultSelected={DEFAULT_TICKERS}
-        placeholder={'Select tickers...'}
+        defaultSelected={selectedTickers}
+        disabled={isLoadingSelectedTickers}
         emptyMessage='No tickers found.'
+        placeholder={'Select tickers...'}
         onChange={onChange}
       />
     </div>
