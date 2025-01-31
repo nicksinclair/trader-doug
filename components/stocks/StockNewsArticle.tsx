@@ -49,7 +49,7 @@ export default function StockNewsArticle({
           width={450}
           height={300}
           className="object-cover" />}
-        <div className="flex flex-col justify-between h-full p-4 gap-2">
+        <div className="flex flex-col justify-between h-full p-4 gap-2 border-t">
           <CardHeader className="line-clamp-3">{title}</CardHeader>
 
           <CardDescription className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-2">
