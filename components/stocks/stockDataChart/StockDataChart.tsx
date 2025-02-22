@@ -27,7 +27,7 @@ export function StockDataChart({ stockData = [] }: StockDataChartProps) {
           left: 12,
           right: 4,
         }}>
-        <CartesianGrid vertical={false} />
+        <CartesianGrid vertical={false} strokeDasharray="4" />
         <XAxis
           dataKey="t"
           tickLine={false}

@@ -11,9 +11,12 @@ import { cn } from '@/lib/utils'
 import { DateRange } from '@/types/dateRange'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
+const now = new Date()
+const isMarketClosed = now.getHours() >= 20
+
 const defaultDateRange: DateRange = {
-  from: subDays(new Date(), 8),
-  to: subDays(new Date(), 1),
+  from: subDays(now, isMarketClosed ? 7 : 8),
+  to: subDays(now, isMarketClosed ? 0 : 1),
 }
 
 export default function DateRangePicker() {
