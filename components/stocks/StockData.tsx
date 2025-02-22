@@ -71,7 +71,7 @@ export default function StockData({ ticker, snapshot }: StockDataProps) {
             {isLoadingStockData && <div className="w-full m-auto p-4 text-center">Loading stock data...</div>}
             {isErrorStockData && <div className="w-full m-auto p-4 text-center">Could not load stock data</div>}
             {stockData?.results?.length === 0 && <div className="w-full m-auto p-4 text-center">No stock data to display</div>}
-            {stockData && <div className="flex flex-col w-full gap-4">
+            {stockData && <div className="flex flex-col w-full px-2 py-4">
               {<StockDataChart stockData={stockData.results} />}
             </div>}
           </TabsContent>

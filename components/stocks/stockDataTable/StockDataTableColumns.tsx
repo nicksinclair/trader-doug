@@ -2,6 +2,7 @@
 
 import { format } from 'date-fns'
 
+import { formatCurrency } from '@/lib/utils'
 import { IAggs } from '@polygon.io/client-js'
 import { ColumnDef } from '@tanstack/react-table'
 
@@ -37,10 +38,3 @@ export const stockDataTableColumns: ColumnDef<NonNullable<IAggs['results']>[numb
     cell: ({ row }) => parseInt(row.getValue('v')).toLocaleString(),
   },
 ]
-
-const formatCurrency = (amount: number) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(amount)
-}

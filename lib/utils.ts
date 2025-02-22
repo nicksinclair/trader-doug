@@ -31,3 +31,10 @@ export function safeJSONParse<T>(value: string | null): T | undefined {
     return undefined
   }
 }
+
+export const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(amount)
+}
