@@ -4,6 +4,7 @@ import { format } from 'date-fns'
 
 import { getAggregates, getTickerNews, Snapshots } from '@/app/api'
 import DeltaBadge from '@/components/patterns/DeltaBadge'
+import { StockDataChart } from '@/components/stocks/stockDataChart/StockDataChart'
 import { StockDataTable } from '@/components/stocks/stockDataTable/StockDataTable'
 import StockNewsArticle from '@/components/stocks/StockNewsArticle'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -60,11 +61,20 @@ export default function StockData({ ticker, snapshot }: StockDataProps) {
         </div>}
       </div>
       <div className="w-full border-t md:border-none">
-        <Tabs defaultValue="table">
+        <Tabs defaultValue="chart">
           <TabsList className="w-full">
+            <TabsTrigger value="chart">Chart</TabsTrigger>
             <TabsTrigger value="table">Table</TabsTrigger>
             <TabsTrigger value="news">News</TabsTrigger>
           </TabsList>
+          <TabsContent value="chart">
+            {isLoadingStockData && <div className="w-full m-auto p-4 text-center">Loading stock data...</div>}
+            {isErrorStockData && <div className="w-full m-auto p-4 text-center">Could not load stock data</div>}
+            {stockData?.results?.length === 0 && <div className="w-full m-auto p-4 text-center">No stock data to display</div>}
+            {stockData && <div className="flex flex-col w-full gap-4">
+              {<StockDataChart stockData={stockData.results} />}
+            </div>}
+          </TabsContent>
           <TabsContent value="table">
             {isLoadingStockData && <div className="w-full m-auto p-4 text-center">Loading stock data...</div>}
             {isErrorStockData && <div className="w-full m-auto p-4 text-center">Could not load stock data</div>}
